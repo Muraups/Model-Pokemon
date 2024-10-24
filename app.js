@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pokedexRoutes = require('./routes/pokedexRoutes'); // Importando o arquivo de rotas
+const path = require('path');
 
 const app = express();
 
@@ -12,7 +13,12 @@ app.set('views', './views'); // Diretório onde as views estarão
 
 app.use(bodyParser.json());
 
-// Usar as rotas da Pokedex
+app.use(bodyParser.json());
+
+// Servir arquivos estáticos (HTML, CSS, JS) da pasta public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Usar as rotas da Pokédex
 app.use('/api', pokedexRoutes);
 
 // Configuração do servidor

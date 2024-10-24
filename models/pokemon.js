@@ -4,10 +4,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Pokedex extends Model {
     static associate(models) {
-      // Definir associações, se necessário
+      // Defina associações aqui, se necessário
     }
   }
-  
+
   Pokedex.init({
     nome: {
       type: DataTypes.STRING,
@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     tipo: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true // Definindo "tipo" como chave primária
+      validate: {
+        isIn: {
+          args: [['Normal', 'Fogo', 'Água', 'Elétrico', 'Grama', 'Gelo', 'Lutador', 'Venenoso', 'Terrestre', 'Voador', 'Psíquico', 'Inseto', 'Pedra', 'Fantasma', 'Dragão', 'Sombrio', 'Aço', 'Fada']],
+          msg: "Tipo inválido. Escolha um dos tipos permitidos."
+        }
+      }
     },
     altura: {
       type: DataTypes.INTEGER,
@@ -26,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    nivelDePoder: { // Corrigido para camelCase
+    nivelDePoder: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
@@ -36,6 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'Pokedex',
     timestamps: false
   });
-  
+
   return Pokedex;
 };
